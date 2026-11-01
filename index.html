@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euler’s method calculator with execises</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="./css/main.css">
+
+    <!--Шрифты-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+    <!--JS-->
+    <script src="./script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.11.2/lib/browser/math.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!--Шапка-->
+        <header class="header">
+          <span class="badge">Численные методы</span>
+          <h1>Метод Эйлера</h1>
+          <p class="subtitle">Интерактивный математический тренажер-калькулятор</p>
+        </header>
+
+        <!--Теория-->
+          <details class="theory-dropdown">
+              <summary><h1>ТЕОРИЯ МЕТОДА</h1></summary>
+              <div class="theory-dropdown-content">
+                  <ul class="theory-list">
+                      <li><b>МЕТОД ЭЙЛЕРА</b> – это простой численный способ решения обыкновенных дифференциальных уравнений первого порядка.</li>
+                      <li><b>ФОРМУЛА ЭЙЛЕРА:</b>
+                          <div class="theory-formula">
+                            \( y_{n+1} = y_n + h \cdot f(x_n, y_n) \)<br>\( x_{n+1} = x_n + h \).
+                          </div>
+                      </li>
+                      <li>
+                          <p><b>ШАГИ ВЫЧИСЛЕНИЙ:</b></p>
+                          <p>1. Введите функцию f(x, y)</p>
+                          <p>2. Задайте начальные условия (x₀ и y₀)</p>
+                          <p>3. Укажите шаг (h) и количество шагов (s)</p>
+                          <p>4. Нажмите кнопку «РЕШИТЬ»</p>
+                      </li>
+                  </ul>
+              </div>
+          </details>
+
+          <!--Синтаксис функций-->
+          <details class="theory-dropdown">
+              <summary>
+                <h1>СИНТАКСИС ФУНКЦИЙ</h1>
+              </summary>
+              <div class="theory-dropdown-content">
+                  <div class="memo-grid">
+                      <div class="memo-item">
+                          <span>Умножение</span>
+                          <code>2*x или 2y</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Степень</span>
+                          <code>x^2</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Корень</span>
+                          <code>sqrt(x)</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Синус</span>
+                          <code>sin(x)</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Косинус</span>
+                          <code>cos(x)</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Тангенс</span>
+                          <code>tg(x)</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Логарифм</span>
+                          <code>log(x)</code>
+                      </div>
+
+                      <div class="memo-item">
+                          <span>Экспонента</span>
+                          <code>exp(x)</code>
+                      </div>
+                  </div>
+                  <p>НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ РУССКИЕ БУКВЫ.</p>
+                  <p><b>Переменные:</b> только x и y</p>
+              </div>
+          </details>
+
+        <!--Переключение разделов-->
+        <nav class="mode-tabs">
+            <button class="mode-tab" id="tab-calculator" type="button">Калькулятор</button>
+            <button class="mode-tab active" id="tab-trainer" type="button">Тренажер</button>
+        </nav>
+
+        <!--Раздел калькулятора-->
+        <div id="calculator-panel" class="hidden">
+
+            <!--Калькулятор-->
+            <section class="calc">
+                <h1>ВЫЧИСЛЕНИЯ</h1>
+                <div class="grid_1">
+
+                    <!--Функция f(x,y)-->
+                    <div class="input-wrapper">
+                        <label>
+                            <span class="prefix">y' =</span>
+                            <input id="func" autocomplete="off">
+                        </label>
+
+                        <div class="field-error" id="func-error"></div>
+                    </div>
+
+
+                    <!--x0 и h-->
+                    <div class="grid_2">
+                        <div class="input-wrapper">
+                            <label>
+                                <span class="prefix">x₀ =</span>
+                                <input id="x0" autocomplete="off">
+                            </label>
+
+                            <div class="field-error" id="x0-error"></div>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <label>
+                                <span class="prefix">h =</span>
+                                <input id="h" autocomplete="off">
+                            </label>
+
+                            <div class="field-error" id="h-error"></div>
+                          </div>
+                    </div>
+
+                    <!--y0 и s-->
+                    <div class="grid_2">
+                        <div class="input-wrapper">
+                            <label>
+                                <span class="prefix">y₀ =</span>
+                                <input id="y0" autocomplete="off">
+                            </label>
+
+                            <div class="field-error" id="y0-error"></div>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <label>
+                                <span class="prefix">s =</span>
+                                <input id="steps" autocomplete="off">
+                            </label>
+
+                            <div class="field-error" id="steps-error"></div>
+                        </div>
+                    </div>
+
+                    <!--Кнопки управления-->
+                    <div class="grid_3">
+                        <button class="solve" type="button" onclick="solve()">решить</button>
+                        <button class="reset" type="button" onclick="resetAll()">сбросить</button>
+                    </div>
+                </div>
+            </section>
+
+            <!--График, таблица и полное решение-->
+            <section class="results hidden" id="results">
+
+                <!--График-->
+                <div class="results_f_and_t">
+                    <h1>ГРАФИК</h1>
+                    <canvas id="graph"></canvas>
+                    <div id="graph-answer"></div>
+                </div>
+
+                <!--Таблица-->
+                <details class="theory-dropdown">
+                    <summary><h1>ТАБЛИЦА</h1></summary>
+                    <div class="results_f_and_t">
+                        <div id="table"></div>
+                    </div>
+                </details>
+
+                <!--Пошаговое решение-->
+                <details class="theory-dropdown">
+                    <summary><h1>РЕШЕНИЕ МЕТОДОМ ЭЙЛЕРА</h1></summary>
+                    <div class="results_f_and_t" id="solution-block">
+                        <div id="euler-solution"></div>
+                    </div>
+                </details>
+            </section>
+        </div>
+
+        <!--Раздел тренажера-->
+        <section class="trainer" id="trainer-panel">
+            <h1>ТРЕНАЖЕР</h1>
+
+            <!--Выбор уровня сложности-->
+            <div class="difficulty-field">
+                <label for="difficulty">Уровень сложности</label>
+                <select id="difficulty">
+                    <option value="easy">Легкий</option>
+                    <option value="medium">Средний</option>
+                    <option value="hard">Сложный</option>
+                </select>
+            </div>
+
+            <!--Заголовок задания-->
+            <div class="task-heading">
+                <h3>Ваше уравнение</h3>
+                <button class="new-equation" id="new-equation" type="button">Новое уравнение</button>
+            </div>
+
+            <!--Уравнение и начальные условия-->
+            <div class="equation-box">
+
+                <!--Уравнение-->
+                <div class="equation-text" id="task-equation"></div>
+
+                <!--Начальные условия-->
+                <div class="conditions" id="task-conditions"></div>
+            </div>
+
+            <!--Описание задания-->
+            <p class="task-description">Решите уравнение методом Эйлера и введите конечный результат.</p>
+            <p class="task-hint">Ответ округлите до 3 знаков после запятой.</p>
+
+            <!--Поле ввода ответа-->
+            <div class="trainer-answer">
+                <label for="student-answer">Ваш ответ</label>
+                <input
+                    id="student-answer"
+                    type="text"
+                    inputmode="decimal"
+                    placeholder="Введите полученное значение"
+                    autocomplete="off">
+            </div>
+
+            <!--Кнопка проверки-->
+            <button class="check-answer" id="check-answer" type="button">ПРОВЕРИТЬ</button>
+
+            <!--Результат проверки-->
+            <div class="check-result hidden" id="check-result" role="status"></div>
+
+            <!--Пошаговое решение тренажера-->
+            <div class="trainer-solution hidden" id="trainer-solution-block">
+                <h3>ПОШАГОВОЕ РЕШЕНИЕ</h3>
+                <div id="trainer-solution"></div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
