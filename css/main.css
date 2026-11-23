@@ -890,6 +890,18 @@ body {
     }
 }
 
+@media (max-width: 555px) {
+    .container .theory-dropdown-content .memo-grid {
+        grid-template-columns: 1fr;
+
+        .memo-item {
+            flex-direction: column;
+            gap: 8px;
+            margin: 2px 0;
+        }
+    }
+}
+
 @media (max-width: 380px) {
 
     .equation-box {
